@@ -17,10 +17,12 @@ class Encoder
 public:
 	Encoder(string filePath);
 	void convertLetters();
+	void matrixMult(vector<int> matrixToManipulate);
 	~Encoder();
 
 private:
 	vector<path> files;
 	vector<vector<float>> hiddenMatrix;
+	vector <vector<vector<float>>> encodedMatricies;
 };
 
