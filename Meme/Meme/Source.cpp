@@ -5,11 +5,14 @@
 #include <iostream>
 #include <math.h>
 #include "Encoder.h"
+#include <time.h>
 
 using namespace std;
 
 int main()
 {
+	srand(time(0));
+
 	string userAnswer;
 	cout << "Would you like to encode or decode a directory (encode / decode)?" << endl;
 	cin >> userAnswer;

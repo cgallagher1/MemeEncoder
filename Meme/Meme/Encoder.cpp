@@ -133,8 +133,8 @@ void Encoder::matrixMult(vector<int> matrixToManipulate)
 		newMatrixRow.push_back(first);
 		second = (convertTo2by2[i][0] * hiddenMatrix[0][1]) + (convertTo2by2[i][1] * hiddenMatrix[1][1]);
 		newMatrixRow.push_back(second);
-		newMatrixRow.clear();
 		newMatrix.push_back(newMatrixRow);
+		newMatrixRow.clear();
 	}
 	encodedMatricies.push_back(newMatrix);
 }
