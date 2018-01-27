@@ -6,7 +6,10 @@
 #include <iostream>
 #include <math.h>
 #include <vector>
+#include <sstream>
+#include <fstream>
 
+using namespace std::experimental::filesystem::v1;
 using namespace std;
 
 class Encoder
@@ -18,5 +21,6 @@ public:
 
 private:
 	vector<path> files;
+	vector<vector<float>> hiddenMatrix;
 };
 

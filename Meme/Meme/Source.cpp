@@ -26,6 +26,7 @@ int main()
 		cin >> filePath;
 
 		Encoder toEncode(filePath);
+		toEncode.convertLetters();
 
 
 		//In case there are multiple messages
