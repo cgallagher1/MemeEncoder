@@ -99,6 +99,22 @@ void Encoder::convertLetters()
 		{
 			matrixMult(groupsOfFour[i]);
 		}
+
+		//Removes the old file
+		remove(files[i].filename());
+
+		//adds the new encoded file
+		ofstream outfile(files[i]);
+		for (int i = 0; i < encodedMatricies.size(); i++)
+		{
+			for (int j = 0; j < encodedMatricies[i].size(); j++)
+			{
+				for (int k = 0; k < encodedMatricies[i][j].size(); k++)
+				{
+					cout << encodedMatricies[i][j][k] << " ";
+				}
+			}
+		}
 	}
 }
 
