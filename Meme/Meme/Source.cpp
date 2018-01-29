@@ -5,6 +5,7 @@
 #include <iostream>
 #include <math.h>
 #include "Encoder.h"
+#include "decoder.h"
 #include <time.h>
 
 using namespace std;
@@ -28,6 +29,7 @@ int main()
 		cout << "Please enter the path to the directory that you would like encoded:" << endl;
 		cin >> filePath;
 
+		//Encodes the files
 		Encoder toEncode(filePath);
 		toEncode.convertLetters();
 
@@ -69,6 +71,12 @@ int main()
 		string filePath;
 		cout << "Please enter the path to the directory that you would like decoded:" << endl;
 		cin >> filePath;
+
+		string specialNums;
+		cout << "Please enter the special numbers to decode these files: " << endl;
+		cin >> specialNums;
+
+		Decoder toDecode(filePath, specialNums);
 
 		//In case there are multiple messages
 		string needMore;

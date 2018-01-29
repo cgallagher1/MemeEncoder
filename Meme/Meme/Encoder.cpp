@@ -105,14 +105,26 @@ void Encoder::convertLetters()
 
 		//adds the new encoded file
 		ofstream outfile(files[i]);
+
 		for (int i = 0; i < encodedMatricies.size(); i++)
 		{
 			for (int j = 0; j < encodedMatricies[i].size(); j++)
 			{
 				for (int k = 0; k < encodedMatricies[i][j].size(); k++)
 				{
-					cout << encodedMatricies[i][j][k] << " ";
+					outfile << encodedMatricies[i][j][k] << " ";
 				}
+			}
+		}
+
+		encodedMatricies.clear();
+
+		cout << "Numbers to remember: ";
+		for (int i = 0; i < hiddenMatrix.size(); i++)
+		{
+			for (int j = 0; j < hiddenMatrix[i].size(); j++)
+			{
+				cout << hiddenMatrix[i][j];
 			}
 		}
 	}
