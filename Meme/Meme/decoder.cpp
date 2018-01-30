@@ -82,10 +82,36 @@ void Decoder::getEncodedMatricies()
 				temp.clear();
 			}
 		}
+		
+		//Mulitply our groups of 4 by the inverseKey
+		for (int i = 0; i < groupsOfFour.size(); i++)
+		{
+			matrixMult(groupsOfFour[i]);
+		}
 
+		//Removes the old file
+		remove(files[i].filename());
+
+		//adds the new encoded file
+		ofstream outfile(files[i]);
+
+		for (int i = 0; i < encodedMatricies.size(); i++)
+		{
+			for (int j = 0; j < encodedMatricies[i].size(); j++)
+			{
+				for (int k = 0; k < encodedMatricies[i][j].size(); k++)
+				{
+					char letter = encodedMatricies[i][j][k];
+					outfile << letter << " ";
+				}
+			}
+		}
+
+		encodedMatricies.clear();
 	}
 }
 
+//Finds the DET of the key matrix
 void Decoder::findDET()
 {
 	DET = 1.00 / ((keyMatrix[0][0] * keyMatrix[1][1]) - (keyMatrix[0][1] * keyMatrix[1][0]));
@@ -123,6 +149,43 @@ void Decoder::findInverseMatrix()
 	rows.push_back(r2c2);
 	inverseMatrix.push_back(rows);
 	rows.clear();
+}
+
+void Decoder::matrixMult(vector<int> matrixToManipulate)
+{
+	vector<vector<float>> convertTo2by2;
+
+	//Converts the values to floats
+	float topLeft = matrixToManipulate[0];
+	float topRight = matrixToManipulate[1];
+	float bottomLeft = matrixToManipulate[2];
+	float bottomRight = matrixToManipulate[3];
+
+	//Makes rows and pushes them back to a 2 by 2 matrix
+	vector<float> makeRow;
+	makeRow.push_back(topLeft);
+	makeRow.push_back(topRight);
+	convertTo2by2.push_back(makeRow);
+	makeRow.clear();
+	makeRow.push_back(bottomLeft);
+	makeRow.push_back(bottomRight);
+	convertTo2by2.push_back(makeRow);
+
+	vector <float> newMatrixRow;
+	vector <vector <float>> newMatrix;
+
+	for (int i = 0; i < inverseMatrix.size(); i++)
+	{
+		float first = 0.0;
+		int second = 0.0;
+		first = (convertTo2by2[i][0] * inverseMatrix[0][0]) + (convertTo2by2[i][1] * inverseMatrix[1][0]);
+		newMatrixRow.push_back(first);
+		second = (convertTo2by2[i][0] * inverseMatrix[0][1]) + (convertTo2by2[i][1] * inverseMatrix[1][1]);
+		newMatrixRow.push_back(second);
+		newMatrix.push_back(newMatrixRow);
+		newMatrixRow.clear();
+	}
+	encodedMatricies.push_back(newMatrix);
 }
 
 Decoder::~Decoder()

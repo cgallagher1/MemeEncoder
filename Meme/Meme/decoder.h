@@ -19,13 +19,14 @@ public:
 	void getEncodedMatricies();
 	void findDET();
 	void findInverseMatrix();
+	void matrixMult(vector<int>matrixToMulitply);
 
 	~Decoder();
 
 private:
 	vector<path> files;
 	vector <vector<float>> keyMatrix;
-	vector<vector <float>> encodedMatricies;
+	vector<vector<vector <float>>> encodedMatricies;
 	vector<vector<float>> inverseMatrix;
 	float DET;
 };
