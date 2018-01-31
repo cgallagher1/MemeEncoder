@@ -12,17 +12,22 @@ using namespace std;
 
 int main()
 {
+	//Seeds the random number generator
 	srand(time(0));
 
+	//Gets the user input of either encode or decode
 	string userAnswer;
 	cout << "Would you like to encode or decode a directory (encode / decode)?" << endl;
 	cin >> userAnswer;
+
+	//Makes sure that they choose one of the options
 	while (userAnswer != "encode" && userAnswer != "decode")
 	{
 		cout << userAnswer << " was not a valid option, please chose to either encode or decode: " << endl;
 		cin >> userAnswer;
 	}
 
+	//Encodes
 	if (userAnswer == "encode")
 	{
 		string filePath;
@@ -40,25 +45,42 @@ int main()
 		cin >> needMore;
 		while (needMore == "y")
 		{
-			cout << "Would you like to encrypt or decrypt the directory: ";
+			//Gets the user input
+			cout << "Would you like to encode or decode a directory (encode / decode)?" << endl;
 			cin >> userAnswer;
+
+			//Makes sure that they choose one of the options
+			while (userAnswer != "encode" && userAnswer != "decode")
+			{
+				cout << userAnswer << " was not a valid option, please chose to either encode or decode: " << endl;
+				cin >> userAnswer;
+			}
 			cout << endl;
 
-			if (userAnswer == "encrypt")
+			//Encode
+			if (userAnswer == "encode")
 			{
 				//Grabs name of the file that will be passed into the encoder
 				cout << "Please enter the path to the directory that you would like encoded:" << endl;
 				cin >> filePath;
 
+				//Encodes the files
+				Encoder toEncode(filePath);
+				toEncode.convertLetters();
 
 				//In case there are multiple messages
 				cout << "Do you have another directory to encrypt ot decrypt (y/n): ";
 				cin >> needMore;
 			}
+			//Decode
 			else
 			{
+				//Grabs name of the file that will be passed into the decoder
 				cout << "Please enter the path to the directory that you would like decoded:" << endl;
 				cin >> filePath;
+
+				Decoder toDecode(filePath);
+				toDecode.getEncodedMatricies();
 
 				//In case there are multiple messages
 				cout << "Do you have another directory to encrypt ot decrypt (y/n): ";
@@ -66,17 +88,17 @@ int main()
 			}
 		}
 	}
+	//Decode
 	else if (userAnswer == "decode")
 	{
+		//Gets the files to decode
 		string filePath;
 		cout << "Please enter the path to the directory that you would like decoded:" << endl;
 		cin >> filePath;
 
-		string specialNums;
-		cout << "Please enter the special numbers to decode these files: " << endl;
-		cin >> specialNums;
-
-		Decoder toDecode(filePath, specialNums);
+		//Decodes the files
+		Decoder toDecode(filePath);
+		toDecode.getEncodedMatricies();
 
 		//In case there are multiple messages
 		string needMore;
@@ -84,16 +106,27 @@ int main()
 		cin >> needMore;
 		while (needMore == "y")
 		{
-			cout << "Would you like to encrypt or decrypt the directory: ";
+			//Gets the users answer
+			cout << "Would you like to encode or decode a directory (encode / decode)?"<< endl;
 			cin >> userAnswer;
+
+			//Makes sure they choose one of the availabel options
+			while (userAnswer != "encode" && userAnswer != "decode")
+			{
+				cout << userAnswer << " was not a valid option, please chose to either encode or decode: " << endl;
+				cin >> userAnswer;
+			}
 			cout << endl;
 
-			if (userAnswer == "encrypt")
+			if (userAnswer == "encode")
 			{
 				//Grabs name of the file that will be passed into the encoder
 				cout << "Please enter the path to the directory that you would like encoded:" << endl;
 				cin >> filePath;
 
+				//Encodes the files
+				Encoder toEncode(filePath);
+				toEncode.convertLetters();
 
 				//In case there are multiple messages
 				cout << "Do you have another directory to encrypt ot decrypt (y/n): ";
@@ -101,8 +134,13 @@ int main()
 			}
 			else
 			{
+				//Grabs name of the file that will be passed into the decoder
 				cout << "Please enter the path to the directory that you would like decoded:" << endl;
 				cin >> filePath;
+
+				//Decodes the files
+				Decoder toDecode(filePath);
+				toDecode.getEncodedMatricies();
 
 				//In case there are multiple messages
 				cout << "Do you have another directory to encrypt ot decrypt (y/n): ";

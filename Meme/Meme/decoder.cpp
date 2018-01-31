@@ -13,7 +13,7 @@
 //Creates Key Matrix
 //Calulates the DET
 //Finds the inverse Matrix
-Decoder::Decoder(string filePath, string keyNumbers)
+Decoder::Decoder(string filePath)
 {
 	//Collects Files
 	for (auto & p : directory_iterator(filePath))
@@ -22,17 +22,24 @@ Decoder::Decoder(string filePath, string keyNumbers)
 		files.push_back(temp);
 	}
 
-	//Creates the key matrix from the passed in string
 	vector<float> temp;
-	for (int i = 0; i < keyNumbers.length(); i++)
+
+	//Creates the key matrix from the passed in string
+	for (int i = 0; i < 4; i++)
 	{
-		temp.push_back(keyNumbers[i]);
+		string keyNumbers;
+		cout << "Please enter number: ";
+		cin >> keyNumbers;
+		
+
+		float value = stof(keyNumbers);
+		temp.push_back(value);
 
 		if (temp.size() == 2)
 		{
 			keyMatrix.push_back(temp);
+			temp.clear();
 		}
-		temp.clear();
 	}
 
 	//Finds the determinant of this matrix
@@ -40,7 +47,6 @@ Decoder::Decoder(string filePath, string keyNumbers)
 
 	//Calulates and creates the inverse Matrix
 	findInverseMatrix();
-
 }
 
 //Opens the files and gets the text
@@ -62,13 +68,11 @@ void Decoder::getEncodedMatricies()
 
 		//Reads the file and pushes the text into our vector
 		string line;
-		while (!infile.eof())
+		while (infile.good())
 		{
-			getline(infile, line);
-			for (int i = 0; i < line.length(); i++)
-			{
-				text.push_back(line[i]);
-			}
+			int value;
+			infile >> value;
+			text.push_back(value);
 		}
 
 		//Breaks down the overall text to groups of 4 
@@ -82,7 +86,7 @@ void Decoder::getEncodedMatricies()
 				temp.clear();
 			}
 		}
-		
+
 		//Mulitply our groups of 4 by the inverseKey
 		for (int i = 0; i < groupsOfFour.size(); i++)
 		{
@@ -102,7 +106,14 @@ void Decoder::getEncodedMatricies()
 				for (int k = 0; k < encodedMatricies[i][j].size(); k++)
 				{
 					char letter = encodedMatricies[i][j][k];
-					outfile << letter << " ";
+					if (letter == '0' && i == encodedMatricies.size() -1)
+					{
+						continue;
+					}
+					else
+					{
+						outfile << letter;
+					}
 				}
 			}
 		}
@@ -114,7 +125,9 @@ void Decoder::getEncodedMatricies()
 //Finds the DET of the key matrix
 void Decoder::findDET()
 {
-	DET = 1.00 / ((keyMatrix[0][0] * keyMatrix[1][1]) - (keyMatrix[0][1] * keyMatrix[1][0]));
+
+	DET = 1.0 / ((keyMatrix[0][0] * keyMatrix[1][1]) - (keyMatrix[0][1] * keyMatrix[1][0]));
+	
 }
 
 void Decoder::findInverseMatrix()
@@ -174,14 +187,23 @@ void Decoder::matrixMult(vector<int> matrixToManipulate)
 	vector <float> newMatrixRow;
 	vector <vector <float>> newMatrix;
 
+	//Matrix multiplication
 	for (int i = 0; i < inverseMatrix.size(); i++)
 	{
 		float first = 0.0;
 		int second = 0.0;
 		first = (convertTo2by2[i][0] * inverseMatrix[0][0]) + (convertTo2by2[i][1] * inverseMatrix[1][0]);
+		//Uses round to round up or down to the nearest integer value so the ascii char is correct
+		//This will sometimes not be a whole number because of the fraction mulitiplication
+		first = round(first);
 		newMatrixRow.push_back(first);
+
 		second = (convertTo2by2[i][0] * inverseMatrix[0][1]) + (convertTo2by2[i][1] * inverseMatrix[1][1]);
+		//Uses round to round up or down to the nearest integer value so the ascii char is correct
+		//This will sometimes not be a whole number because of the fraction mulitiplication
+		second = round(second);
 		newMatrixRow.push_back(second);
+
 		newMatrix.push_back(newMatrixRow);
 		newMatrixRow.clear();
 	}

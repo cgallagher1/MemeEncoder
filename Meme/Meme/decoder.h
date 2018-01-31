@@ -14,8 +14,9 @@ using namespace std;
 
 class Decoder
 {
+	//Public functions that we will use to decode the text
 public:
-	Decoder(string filePath, string keyNumbers);
+	Decoder(string filePath);
 	void getEncodedMatricies();
 	void findDET();
 	void findInverseMatrix();
@@ -24,10 +25,16 @@ public:
 	~Decoder();
 
 private:
+	//Holds the files
 	vector<path> files;
+	//Holds our key matrix
 	vector <vector<float>> keyMatrix;
+	//Holds our read in encoded matricies
 	vector<vector<vector <float>>> encodedMatricies;
+	//Holds our calculated inverse matrix
 	vector<vector<float>> inverseMatrix;
+	//Holds our calcualted determinant of our
+	//key matrix
 	float DET;
 };
 

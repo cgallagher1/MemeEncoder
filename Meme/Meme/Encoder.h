@@ -14,6 +14,7 @@ using namespace std;
 
 class Encoder
 {
+	//Public functions that we will use to encode the text
 public:
 	Encoder(string filePath);
 	void convertLetters();
@@ -21,8 +22,11 @@ public:
 	~Encoder();
 
 private:
+	//Vector to hold the files
 	vector<path> files;
+	//Vector to hold our key matrix
 	vector<vector<float>> hiddenMatrix;
+	//Vector to hold our mulitple encoded matricies
 	vector <vector<vector<float>>> encodedMatricies;
 };
 

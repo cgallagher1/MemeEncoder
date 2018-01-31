@@ -118,16 +118,18 @@ void Encoder::convertLetters()
 		}
 
 		encodedMatricies.clear();
-
-		cout << "Numbers to remember: ";
-		for (int i = 0; i < hiddenMatrix.size(); i++)
+	}
+	//Prints the key matrix which the user must 
+	//remember in order to decode their text
+	cout << "Numbers to remember: ";
+	for (int i = 0; i < hiddenMatrix.size(); i++)
+	{
+		for (int j = 0; j < hiddenMatrix[i].size(); j++)
 		{
-			for (int j = 0; j < hiddenMatrix[i].size(); j++)
-			{
-				cout << hiddenMatrix[i][j];
-			}
+			cout << hiddenMatrix[i][j] << " ";
 		}
 	}
+	cout << endl;
 }
 
 void Encoder::matrixMult(vector<int> matrixToManipulate)
@@ -153,6 +155,8 @@ void Encoder::matrixMult(vector<int> matrixToManipulate)
 
 	vector <float> newMatrixRow;
 	vector <vector <float>> newMatrix;
+
+	//Matrix multiplication
 	for (int i = 0; i < hiddenMatrix.size(); i++)
 	{
 		float first = 0.0;
